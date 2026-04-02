@@ -16,5 +16,5 @@ jobs:
       - name: Run Unit Tests
         run: |
           xcodebuild test \
-          -scheme Task Tracker \
+          -scheme "Task Tracker" \
           -destination 'platform=iOS Simulator,name=iPhone 14'
