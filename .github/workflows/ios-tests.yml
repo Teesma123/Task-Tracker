@@ -18,4 +18,4 @@ jobs:
           xcodebuild test \
           -project "Task Tracker.xcodeproj" \
           -scheme "Task Tracker" \
-          -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.5'
+          -destination 'platform=iOS Simulator,name=iPhone 16'
