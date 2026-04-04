@@ -9,11 +9,17 @@ import SwiftUI
 
 struct TaskRowView: View {
     let task: TaskEntity
+    var onToggle: (() -> Void)?
 
     var body: some View {
         HStack {
-            Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                .foregroundColor(task.isCompleted ? .gray : .blue)
+            Button(action: {
+                onToggle?()
+            }) {
+                Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(task.isCompleted ? .gray : .blue)
+            }
+            .buttonStyle(.plain)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(task.title ?? "")
@@ -30,7 +36,7 @@ struct TaskRowView: View {
         .padding()
         .background(Color(.systemBackground))
         .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+        .shadow(color: Color.black.opacity(0.05), radius: 5)
         .opacity(task.isCompleted ? 0.6 : 1)
     }
 }
