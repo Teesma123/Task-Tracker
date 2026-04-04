@@ -39,7 +39,9 @@ struct TaskListView: View {
             ScrollView {
                 VStack(spacing: 12) {
                     ForEach(viewModel.tasks, id: \.id) { task in
-                        TaskRowView(task: task)
+                        TaskRowView(task: task) {
+                            viewModel.toggleTask(task)
+                        }
                             .onTapGesture {
                                 if let id = task.id {
                                     coordinator.goToDetail(taskID: id)
