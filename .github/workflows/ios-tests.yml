@@ -20,6 +20,6 @@ jobs:
           -project "Task Tracker.xcodeproj" \
           -scheme "Task Tracker" \
           -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest'
-          -only-testing:"Task TrackerTests" \
-          -resultBundlePath TestResults \
+          -only-testing "Task TrackerTests" \
           CODE_SIGNING_ALLOWED=NO
+      
