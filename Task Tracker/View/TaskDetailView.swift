@@ -8,25 +8,21 @@
 import SwiftUI
 
 struct TaskDetailView: View {
-    let taskID: UUID
-    @StateObject private var viewModel = TaskViewModel()
+    let task: TaskItem
+    @EnvironmentObject var coordinator: AppCoordinator
 
     var body: some View {
-        if let task = viewModel.tasks.first(where: { $0.id == taskID }) {
-            VStack(spacing: 20) {
+        VStack(spacing: 20) {
+            Text(task.title)
+                .font(.title3)
+                .fontWeight(.bold)
 
-                Text(task.title ?? "")
-                    .font(.title3)
-                    .fontWeight(.bold)
+            Text(task.isCompleted ? "Completed" : "Pending")
+                .foregroundColor(task.isCompleted ? .green : .orange)
 
-                Text(task.isCompleted ? "Completed" : "Pending")
-                    .foregroundColor(task.isCompleted ? .green : .orange)
-
-                Spacer()
-            }
-            .padding()
-        } else {
-            Text("Task not found")
+            Spacer()
         }
+        .padding()
     }
 }
+

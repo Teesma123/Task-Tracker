@@ -9,50 +9,31 @@ import Foundation
 import CoreData
 
 class TaskViewModel: ObservableObject {
-    @Published var tasks: [TaskEntity] = []
+    @Published var tasks: [TaskItem] = []
 
-    private var context = CoreDataManager.shared.context
+    private let repository: TaskRepositoryProtocol
 
-    init(context: NSManagedObjectContext = CoreDataManager.shared.context) {
-        self.context = context
+    init(repository: TaskRepositoryProtocol = CoreDataTaskRepository()) {
+        self.repository = repository
         fetchTasks()
     }
 
     func fetchTasks() {
-        let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
-
-        request.sortDescriptors = [
-            NSSortDescriptor(keyPath: \TaskEntity.isCompleted, ascending: true),
-            NSSortDescriptor(keyPath: \TaskEntity.createdAt, ascending: false)
-        ]
-
-        do {
-            tasks = try context.fetch(request)
-        } catch {
-            print("Fetch failed")
-        }
+        tasks = repository.fetchTasks()
     }
 
     func addTask(title: String) {
-        let newTask = TaskEntity(context: context)
-        newTask.id = UUID()
-        newTask.title = title
-        newTask.isCompleted = false
-        newTask.createdAt = Date()
-
-        CoreDataManager.shared.save()
+        repository.addTask(title: title)
         fetchTasks()
     }
 
-    func toggleTask(_ task: TaskEntity) {
-        task.isCompleted.toggle()
-        CoreDataManager.shared.save()
+    func toggleTask(_ task: TaskItem) {
+        repository.toggleTask(task)
         fetchTasks()
     }
 
     func deleteTask(at offsets: IndexSet) {
-        offsets.map { tasks[$0] }.forEach(context.delete)
-        CoreDataManager.shared.save()
-        fetchTasks()
-    }
+            offsets.map { tasks[$0] }.forEach { repository.deleteTask($0) }
+            fetchTasks()
+        }
 }

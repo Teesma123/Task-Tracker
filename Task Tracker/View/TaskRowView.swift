@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TaskRowView: View {
-    let task: TaskEntity
+    let task: TaskItem
     var onToggle: (() -> Void)?
 
     var body: some View {
@@ -22,11 +22,11 @@ struct TaskRowView: View {
             .buttonStyle(.plain)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(task.title ?? "")
+                Text(task.title)
                     .font(.headline)
                     .foregroundColor(task.isCompleted ? .gray : .primary)
 
-                Text(task.createdAt ?? Date(), style: .date)
+                Text(task.createdAt, style: .date)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

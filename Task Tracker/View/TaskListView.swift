@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TaskListView: View {
-    @StateObject private var viewModel = TaskViewModel()
+    @EnvironmentObject var viewModel: TaskViewModel
     @EnvironmentObject var coordinator: AppCoordinator
 
     @State private var newTask = ""
@@ -42,11 +42,9 @@ struct TaskListView: View {
                         TaskRowView(task: task) {
                             viewModel.toggleTask(task)
                         }
-                            .onTapGesture {
-                                if let id = task.id {
-                                    coordinator.goToDetail(taskID: id)
-                                }
-                            }
+                        .onTapGesture {
+                            coordinator.goToDetail(task: task)
+                        }
                     }
                 }
                 .padding()
@@ -59,5 +57,9 @@ struct TaskListView: View {
 }
 
 #Preview {
+    let coordinator = AppCoordinator()
+    
     TaskListView()
+        .environmentObject(coordinator)
+        .environmentObject(coordinator.taskViewModel)
 }

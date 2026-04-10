@@ -12,14 +12,9 @@ struct RootView: View {
 
     var body: some View {
         NavigationStack(path: $coordinator.path) {
-            
-            // Initial Screen
-            TaskListView()
-                .environmentObject(coordinator)
-            
-                // Navigation Destination
-                .navigationDestination(for: UUID.self) { taskID in
-                    TaskDetailView(taskID: taskID)
+            coordinator.destination(for: .taskList)
+                .navigationDestination(for: AppRoute.self) { route in
+                    coordinator.destination(for: route)
                 }
         }
     }

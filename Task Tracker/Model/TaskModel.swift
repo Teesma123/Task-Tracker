@@ -12,3 +12,10 @@ struct Task: Identifiable, Codable {
     var title: String
     var isCompleted: Bool
 }
+
+struct TaskItem: Identifiable, Hashable {
+    let id: UUID
+    var title: String
+    var isCompleted: Bool
+    var createdAt: Date
+}
