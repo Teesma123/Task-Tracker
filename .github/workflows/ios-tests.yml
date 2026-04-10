@@ -4,6 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
+    branches: [ main ]
 
 jobs:
   test:
@@ -19,3 +20,6 @@ jobs:
           -project "Task Tracker.xcodeproj" \
           -scheme "Task Tracker" \
           -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest'
+          -only-testing:"Task TrackerTests" \
+          -resultBundlePath TestResults \
+          CODE_SIGNING_ALLOWED=NO
