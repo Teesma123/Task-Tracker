@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreData
 
 class TaskViewModel: ObservableObject {
     @Published var tasks: [TaskItem] = []
